@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kelly+Slab&display=swap');
+
+.card1{
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(32,77,40,1) 0%, rgba(0,212,155,1) 68%);
+    border-radius: 15px;
+    width: 95%;
+    height: 215px;
+    padding: 10px;
+    margin: 40px auto 10px;
+}
+
+body{
+    background: white;
+}
+
+.space{
+    height: 75px;
+}
+.card-number{
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    align-items: center;
+    font-family: 'Kelly Slab', cursive;
+    border-radius: 3px;
+    border: #6f42c1 1px solid;
+}
+
+.dateValid{
+    width: 80%;
+    margin-top: 3px;
+    font-family: 'Kelly Slab', cursive;
+    text-align: center;
+    border-radius: 3px;
+    border: #6f42c1 1px solid;
+}
+#button{
+    font-family: 'Comfortaa', cursive;
+    border-radius: 8px;
+    border: black 0;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    padding: 10px;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,72,121,1) 0%, rgba(0,212,255,1) 71%);
+}
+.paidForm{
+    font-family: 'Kelly Slab', cursive;
+}

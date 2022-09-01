@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kelly+Slab&display=swap');
+
+
+.profile{
+    padding: 20px 20px;
+}
+
+h1.name{
+    text-align: center;
+    font-family: 'Comfortaa', cursive;
+}
+
+h3.nickname{
+    text-align: center;
+    font-family: 'Kelly Slab', cursive;
+}
+.h3.dataInForm{
+    font-family: 'Comfortaa', cursive;
+}
+.tickets{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 15px;
+    border: #4F594F 2px solid;
+    background: white;
+    width: 100%;
+}
+.row.ticket{
+    margin: 20px auto;
+    width: 95%;
+    padding: 10px 10px;
+    border-radius: 15px;
+    border: #4F594F 2px solid;
+    box-shadow: 9px 9px 22px -4px rgba(0,0,0,0.62);
+    background: white;
+}
+
+.ticketImg{
+    height: 240px;
+}
+
+p.data{
+    font-family: 'Kelly Slab', cursive;
+    font-size: 18px;
+    color: #4e555b;
+    margin-bottom: 6px;
+}
+.ticketImg img{
+    border-radius: 15px 0 0 15px;
+}

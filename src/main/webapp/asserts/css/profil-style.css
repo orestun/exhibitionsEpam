@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kelly+Slab&display=swap');
+
+
+.profile{
+    padding: 20px 20px;
+}
+
+h1.name{
+    text-align: center;
+    font-family: 'Comfortaa', cursive;
+}
+
+h3.nickname{
+    text-align: center;
+    font-family: 'Kelly Slab', cursive;
+}
+.h3.dataInForm{
+    font-family: 'Comfortaa', cursive;
+}
+.tickets{
+    margin: 20px;
+    padding: 10px;
+    border-radius: 15px;
+    height: 500px;
+    border: #4F594F 2px solid;
+    background: white;
+}

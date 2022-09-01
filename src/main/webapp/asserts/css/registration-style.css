@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+html{
+    height: 100%;
+}
+body{
+    background:#A6A69F;
+    font-family: 'Comfortaa', cursive;
+    font-size: 18px;
+    height: 100%;
+}
+
+#myDropdown a{
+    font-family: 'Comfortaa', cursive;
+}
+
+.login-form{
+    min-width: 300px;
+    margin-top: 40px;
+    width:100%;
+    height: auto;
+    background: #F2EAE4;
+    border-radius: 10px;
+    border: 2px black solid;
+    display: block;
+    padding: 30px 30px;
+    font-family: 'Comfortaa', cursive;
+    font-size: 18px;
+}
+label,
+span{
+    color: #0D0D0D;
+}
+.login-form h1{
+    text-align: center;
+    color: #4F594F;
+    font-size: 40px;
+    font-family: 'Comfortaa', cursive;
+}
+a.nav-link.px-2{
+    color: white;
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+}
+
+a.nav-link.active.px-2{
+    color: #ffc913;
+}
+
+a.nav-link.px-2:hover{
+    font-size: 18px;
+}
+
+a.nav-link.active.px-2:hover{
+    font-size: 16px;
+}
+
+.login-form h1:hover{
+    color: #A6A69F;
+}
+
+.login-form form .user-details{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 25px;
+    margin: 20px 0 12px 0;
+    justify-content: space-between;
+}
+
+form .user-details .input-box{
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
+    min-width: 150px;
+    margin-top: 10px;
+    align-items: center;
+}
+.user-details .input-box select,
+.user-details .input-box input{
+    height: 30px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1.5px #0D0D0D solid;
+    margin-top: 3px;
+    font-size:16px;
+}
+.user-details .input-box label select{
+    height: 30px;
+    width: 100%;
+}
+
+form .submit-button input{
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1.5px #000 solid;
+    background: #4F594F;
+    padding:0 15px ;
+    font-family:  'Comfortaa', cursive;
+    font-size: 18px;
+    color: white;
+}
+form .submit-button input:hover{
+    border: 1.5px #403333FF solid;
+    background: #A6A69F;
+    color: black;
+}
+
+
+optgroup,
+option{
+    background: #d5d5ff;
+    font-family: 'Comfortaa', cursive;
+}
+.link{
+    padding-bottom: 20px;
+    padding-left: 25px;
+    font-size: 16px;
+}
+.link a{
+    color: #004e59;
+}
+
+#passwordError,
+#usernameError,
+#phoneError,
+#emailError{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #cb1111;
+    font-size: 12px;
+    margin: 1px 0 0;
+}

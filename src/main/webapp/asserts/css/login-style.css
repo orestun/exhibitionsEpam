@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+body{
+    background:#A6A69F;
+}
+
+.sign-in-form{
+    width: 90%;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    background: #F2EAE4;
+    border-radius: 10px;
+    border: 2px black solid;
+    display: block;
+    padding: 30px 30px;
+    font-family: 'Comfortaa', cursive;
+    font-size: 18px;
+    vertical-align: center;
+
+}
+span{
+    color: #0D0D0D;
+}
+.sign-in-form h1 {
+    text-align: center;
+    color: #4F594F;
+    font-size: 40px;
+}
+
+.sign-in-form h1:hover{
+    color: #A6A69F;
+}
+
+.sign-in-form .users-pass{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 25px;
+    margin: 20px 0 12px 0;
+    justify-content: space-between;
+}
+
+form .users-pass .input-box{
+    margin-bottom: 15px;
+    min-width: 150px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.users-pass .input-box input{
+    height: 30px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1.5px #0D0D0D solid;
+    margin-top: 3px;
+    font-size:16px;
+}
+
+form .submit-button input{
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1.5px #000 solid;
+    background: #4F594F;
+    padding:0px 15px ;
+    font-family:  'Comfortaa', cursive;
+    font-size: 18px;
+    color: white;
+}
+
+form .submit-button input:hover{
+    border: 1.5px #0D0D0D solid;
+    background: #A6A69F;
+    color: black;
+
+}
+
+.link{
+    padding-bottom: 20px;
+    padding-left: 25px;
+    font-size: 16px;
+}
+.link a{
+    color: #004e59;
+}
+
+#usernameError,
+#incorrectError{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #cb1111;
+    font-size: 12px;
+    margin: 1px 0 0;
+}

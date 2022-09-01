@@ -1,0 +1,21 @@
+#myDropdown a{
+    font-family: 'Comfortaa', cursive;
+}
+
+a.nav-link.px-2{
+    color: white;
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+}
+
+a.nav-link.active.px-2{
+    color: #ffc913;
+}
+
+a.nav-link.px-2:hover{
+    font-size: 18px;
+}
+
+a.nav-link.active.px-2:hover{
+    font-size: 16px;
+}

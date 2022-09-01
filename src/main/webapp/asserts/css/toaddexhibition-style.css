@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kelly+Slab&display=swap');
+
+h1.head{
+    margin-top: 40px;
+    text-align: center;
+    font-family: 'Comfortaa', cursive;
+}
+h5{
+    text-align: center;
+    font-family: 'Comfortaa', cursive;
+}
+.uploadButton{
+    display:none;
+}
+.uploadLabel {
+    border: 2px solid #ffaf00;
+    display: inline-block;
+    padding: 7px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #4F594F;
+    color: white;
+    font-family: 'Comfortaa', cursive;
+    width: 20%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.uploadLabel:hover{
+    background-color:#A6A69F;
+    color: black;
+}
+
+input.inputName{
+    font-family: 'Comfortaa', cursive;
+    text-align: center;
+    width: 80%;margin-left: 10%;margin-right: 10%;
+}
+
+input.inputDate{
+    font-family: 'Comfortaa', cursive;
+    text-align: center;
+    width: 80%;margin-left: 10%;margin-right: 10%;
+}
+
+input.inputTime{
+    font-family: 'Comfortaa', cursive;
+    text-align: center;
+    width: 80%;margin-left: 10%;margin-right: 10%;
+}
+.check{
+    width: 50%;
+    margin-right: 25%;
+    margin-left: 25%;
+    font-size: 14px;
+    font-family: 'Comfortaa', cursive;
+}
+input.paidForm{
+    text-align: center;
+    font-family: 'Kelly Slab', cursive;
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+input{
+    border-radius: 5px;
+    border: #4F594F 2px solid;
+}
+input.button{
+    width: 50%;
+    margin-right: 25%;
+    margin-left: 25%;
+    font-family: 'Comfortaa', cursive;
+    background: #4F594F;
+    border-radius: 10px;
+    border: black 2px solid;
+    color: white;
+}
+input.button:hover{
+    background-color:#A6A69F;
+    color: black;
+}
+#dateError{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #cb1111;
+    font-size: 12px;
+    margin: 1px 0 0;
+}
