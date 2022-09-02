@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Exhibitions</title>
-    <link rel="stylesheet" href="asserts/css/profil.css">
+    <link rel="stylesheet" href="asserts/css/profil-style.css">
     <link rel="stylesheet" href="asserts/css/header-style.css">
     <link rel="stylesheet" href="asserts/css/bootstrap.css">
     <link href="asserts/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12" style="margin-top: 30px">
                         <h3 style="text-align: center;font-family: 'Comfortaa', cursive">Мої квитки:</h3>
                     </div>
                     <div class="row tickets" style="margin: 0 0">
@@ -103,7 +103,14 @@
                             List<Ticket> ticketsList = ticketsDAO.toGetTicketsForUser((String) request.getSession().getAttribute("username"));
                             ExhibitionsDAOImpl exhibitionsDAO = ExhibitionsDAOImpl.getInstance();
                             ExhibitonHallsDAOImpl exhibitonHallsDAO = ExhibitonHallsDAOImpl.getInstance();
-                            for(Ticket ticket:ticketsList){%>
+                            if(ticketsList.isEmpty()){%>
+                                <div class="row" style="margin-top: 30px">
+                                    <div class="col-12">
+                                        <h1 style="font-family: 'Comfortaa', cursive;text-align: center">Ви поки не купяли квитки<img src="asserts/img/eys.png" width="40px"></h1>
+                                    </div>
+                                </div>
+                        <%} else {
+                                for(Ticket ticket:ticketsList){%>
                                 <div class="row ticket" style="margin: 20px 20px 20px">
                                     <div class="col-4 ticketImg">
                                         <%Exhibitions exhibitions = exhibitionsDAO.getExhibitionById(ticket.getIdTicket());%>
@@ -132,10 +139,14 @@
                                             <div class="col-12">
                                                 <p class="data">Ціна: <%=exhibitions.getPrice()%></p>
                                             </div>
+                                            <div class="col-12">
+                                                <p class="data" style="color: #bd2130">ID: <%=ticket.getIdExhibition()%></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                        <% }%>
+                        <% }
+                            }%>
                     </div>
                 </div>
             </div>

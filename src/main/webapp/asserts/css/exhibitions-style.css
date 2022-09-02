@@ -23,7 +23,7 @@ select.sorting{
     padding: 10px;
     margin: 10px;
     border: #4f594f 2px solid;
-    background: white;
+    background: #F2EAE4;
     height: 200px;
 }
 .cardImage{
@@ -32,6 +32,11 @@ select.sorting{
     margin-bottom: auto;
     max-height: 180px;
     height: 180px;
+}
+
+.sortingBar{
+    padding: 20px;
+    color: white;
 }
 
 .exhibitionCard p{
@@ -49,4 +54,22 @@ select.sorting{
     background: #F2EAE4;
     margin-right: 5px;
     margin-left: 5px;
+}
+input.dataSort{
+    width: 100%;
+    border: #4F594F 2px solid;
+    border-radius: 5px;
+    font-family: 'Comfortaa', cursive;
+    text-align: center;
+    background: #F2EAE4;
+    text-decoration: none;
+}
+a.sortingLinks{
+    text-align: center;
+    color: #ff0500
+}
+
+a.sortingLinks:hover{
+    text-align: center;
+    color: #ff0500
 }

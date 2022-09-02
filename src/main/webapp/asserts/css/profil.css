@@ -23,8 +23,10 @@ h3.nickname{
     padding: 10px;
     border-radius: 15px;
     border: #4F594F 2px solid;
-    background: white;
+    background: #A6A69F;
     width: 100%;
+    max-height: 400px;
+    overflow-y: scroll;
 }
 .row.ticket{
     margin: 20px auto;
@@ -42,7 +44,7 @@ h3.nickname{
 
 p.data{
     font-family: 'Kelly Slab', cursive;
-    font-size: 18px;
+    font-size: 16px;
     color: #4e555b;
     margin-bottom: 6px;
 }

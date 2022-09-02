@@ -8,7 +8,7 @@
 <html>
 <head>
     <title>Exhibitions</title>
-    <link rel="stylesheet" href="asserts/css/exhibitions-style.css">
+    <link rel="stylesheet" href="asserts/css/exhibitions.css">
     <link rel="stylesheet" href="asserts/css/header-style.css">
     <link rel="stylesheet" href="asserts/css/bootstrap.css">
     <link href="asserts/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -66,31 +66,68 @@
         </header>
     </div>
     <div class="row">
-        <div class="col-md-1 col-lg-2 col-xl-2" style="background: #A6A69F"></div>
-        <div class="col-12 col-md-10 col-lg-8 col-xl-8" style="background: #F2EAE4">
+        <div class="col-md-2 col-lg-2 col-xl-2" style="background: #A6A69F">
+        </div>
+        <div class="col-10 col-md-10 col-lg-8 col-xl-8" style="background: #F2EAE4">
             <div class="exhibitions">
-                <form>
-                <div class="row" style="margin-top: 20px">
+                <form action="SortExhibitions" method="post">
+                    <div class="row" style="margin-top: 20px">
                         <div class="col-2">
-                            <h6 style="margin-top: 6%;margin-bottom:6%;text-align: center;font-family: 'Comfortaa', cursive;">Сортування: </h6>
+                                <h6 style=" text-align: center;font-family: 'Comfortaa', cursive;">Сортування: </h6>
                         </div>
-                        <div class="col-3">
-                            <select style="width: 100%;padding: 5px;text-align: center;font-family: 'Comfortaa', cursive;border-radius: 5px;border: #4F594F 2px solid;" name="sorting" class="sorting" required>
-                                <option value="Ordinary">Звичайне</option>
-                                <option value="lowToHigh">Ціна:за зростанням</option>
-                                <option value="HighToLow">Ціна:за спаданням</option>
-                            </select>
+                        <div class="col-7">
+                            <div class="row">
+                                <div class="col-2">
+                                    <a href="#" class="sortingLinks"><p>Звичайне</p></a>
+                                </div>
+                                <div class="col-5">
+                                    <a href="#" class="sortingLinks"><p>Ціна:за спаданням</p></a>
+                                </div>
+                                <div class="col-5">
+                                    <a href="#" class="sortingLinks"><p>Ціна:за зростанням</p></a>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-3">
                             <input style="height: 33.33px;width: 100%;padding: 5px;text-align: center;font-family: 'Comfortaa', cursive;border-radius: 5px;border: #4F594F 2px solid;font-size: 16px;" type="submit" value="сортувати" name="buttonSort" class="buttonSort">
                         </div>
-                        <div class="col-4"></div>
-                </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-4">
+                            <input type="text" name="name" class="dataSort" placeholder="Шукати за назвою">
+                        </div>
+                        <div class="col-5">
+                            <div class="row">
+                                <div class="col-4">
+                                    <p style="text-align: center;font-family: 'Comfortaa', cursive">Ціна від</p>
+                                </div>
+                                <%ExhibitionsDAOImpl exhibitionsDAO = ExhibitionsDAOImpl.getInstance();%>
+                                <div class="col-3" style="padding: 0 0">
+                                    <input class="dataSort" min="<%=exhibitionsDAO.minPrice().toString()%>" max="<%=exhibitionsDAO.maxPrice().toString()%>" type="number" name="priceFrom" width="40px">
+                                </div>
+                                <div class="col-2">
+                                    <p style="text-align: center;font-family: 'Comfortaa', cursive">до</p>
+                                </div>
+                                <div class="col-3" style="padding: 0 0">
+                                    <input class="dataSort" min="<%=exhibitionsDAO.minPrice()%>" max="<%=exhibitionsDAO.maxPrice()%>" type="number" name="priceTo" width="40px" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="row">
+                                <div class="col-5">
+                                    <p style="text-align: center;font-family: 'Comfortaa', cursive">Дата</p>
+                                </div>
+                                <div class="col-7" style="padding: 0 0">
+                                    <input class="dataSort" type="date" name="date" width="40px" min="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="row">
                 <% if(session.getAttribute("sorting")==null){
-                    ExhibitionsDAOImpl exhibitionsDAO = ExhibitionsDAOImpl.getInstance();
                     List<Exhibitions> exhibitionsList = exhibitionsDAO.exhibitionsCommonList();
                     ExhibitonHallsDAO exhibitonHallsDAO = ExhibitonHallsDAOImpl.getInstance();
                     for(Exhibitions exhibition:exhibitionsList){ %>
@@ -132,10 +169,55 @@
                             </div>
                         </div>
                 <%  }
-                } %>
+                } else if(session.getAttribute("sorting")=="true"){
+                    session.removeAttribute("sorting");
+                    List<Exhibitions> exhibitionsList = (List<Exhibitions>) request.getSession().getAttribute("sortingList");
+                    ExhibitonHallsDAO exhibitonHallsDAO = ExhibitonHallsDAOImpl.getInstance();
+                    for(Exhibitions exhibition1:exhibitionsList){%>
+                        <div class="col-6" style="padding: 0 0;" >
+                            <div class="row exhibitionCard" style="margin: 10px;box-shadow: 9px 9px 22px -4px rgba(0,0,0,0.62);">
+                                <div class="col-6" style="padding: 0 0">
+                                    <img src="images/<%= exhibition1.getImage()%>" class="cardImage" width="100%">
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p><%= exhibition1.getNameUA()%></p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p>Тематика: <%= exhibition1.getThemeUA()%></p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p><%=exhibition1.getDate_from()+" - "+exhibition1.getDate_to()%></p>
+                                        </div>
+                                        <div class="col-12">
+                                            <% String time_from = exhibition1.getWorking_time_from().toString()+" ";
+                                                String time_to = exhibition1.getWorking_time_to().toString()+" ";
+                                            %>
+                                            <p>Робочий час: <%= time_from.replace(":00 ","")+" - "+time_to.replace(":00 ","")%></p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p>Зали: <%= exhibitonHallsDAO.getHalls(exhibition1.getId_exhibition())%></p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p>Ціна: <%=exhibition1.getPrice() %></p>
+                                        </div>
+                                        <% if(request.getSession().getAttribute("role")!=null){%>
+                                        <div class="col-12 buttonForCard" >
+                                            <a href="toAddInBasket?id=<%=exhibition1.getId_exhibition()%>"><img src="asserts/img/basket.png" width="20px"></a>
+                                        </div>
+                                        <%}%>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                <% }
+                }else{
+                    System.out.println("hello world");
+                }%>
             </div>
         </div>
-        <div class="col-md-1 col-lg-2 col-xl-2" style="background: #A6A69F"></div>
+        <div class="col-md-2 col-lg-2 col-xl-2" style="background: #A6A69F"></div>
     </div>
 </div>
 <script src="asserts/js/dropdown.js"></script>

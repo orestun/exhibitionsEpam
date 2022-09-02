@@ -19,10 +19,38 @@ h3.nickname{
     font-family: 'Comfortaa', cursive;
 }
 .tickets{
-    margin: 20px;
+    margin: 10px;
     padding: 10px;
     border-radius: 15px;
-    height: 500px;
     border: #4F594F 2px solid;
+    background: #A6A69F;
+    width: 100%;
+    max-height: 400px;
+    overflow-x: scroll;
+}
+.tickets::-webkit-scrollbar{
+    width: 0;
+}
+.row.ticket{
+    margin: 20px auto;
+    width: 95%;
+    padding: 10px 10px;
+    border-radius: 15px;
+    border: #4F594F 2px solid;
+    box-shadow: 9px 9px 22px -4px rgba(0,0,0,0.62);
     background: white;
+}
+
+.ticketImg{
+    height: 240px;
+}
+
+p.data{
+    font-family: 'Kelly Slab', cursive;
+    font-size: 16px;
+    color: #4e555b;
+    margin-bottom: 6px;
+}
+.ticketImg img{
+    border-radius: 15px 0 0 15px;
 }

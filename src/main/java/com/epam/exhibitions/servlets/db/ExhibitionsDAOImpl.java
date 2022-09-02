@@ -3,6 +3,7 @@ package com.epam.exhibitions.servlets.db;
 import com.epam.exhibitions.servlets.db.DAO.ExhibitionsDAO;
 import com.epam.exhibitions.servlets.db.entity.Exhibitions;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -140,6 +141,35 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
         }
     }
 
+    @Override
+    public List<Exhibitions> exhibitionsSorting(String name,  Date dateFrom,Date dateTo, BigDecimal priceFrom, BigDecimal priceTo) {
+        String query = "SELECT * FROM exhibition WHERE price BETWEEN ? AND ? \n" +
+                "AND (date_from <= ? AND ? <= date_to)\n" +
+                "AND (nameUA like ? OR nameEN like ?)";
+        List<Exhibitions> exhibitionsList = new ArrayList<>();
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(CONNECTION_URL,USER,PASSWORD);
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setBigDecimal(1,priceFrom);
+            preparedStatement.setBigDecimal(2,priceTo);
+            preparedStatement.setDate(3,dateFrom);
+            preparedStatement.setDate(4,dateTo);
+            preparedStatement.setString(5,"%"+name+"%");
+            preparedStatement.setString(6,"%"+name+"%");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                Exhibitions exhibitions = new Exhibitions(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6),rs.getDate(7),rs.getTime(8),rs.getTime(9),rs.getBigDecimal(10));
+                exhibitions.setId_exhibition(rs.getInt(1));
+                exhibitions.setImage(rs.getString(11));
+                exhibitionsList.add(exhibitions);
+            }
+            return exhibitionsList;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Exhibitions getExhibitionById(int id_exhibition){
         String query = "SELECT * FROM exhibition WHERE id_exhibition=?";
         try{
@@ -160,8 +190,55 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
         return null;
     }
 
+    @Override
+    public BigDecimal minPrice() {
+        String query = "SELECT price FROM exhibition";
+        BigDecimal min = new BigDecimal(0);
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(CONNECTION_URL,USER,PASSWORD);
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            if(rs.next()){
+                min = rs.getBigDecimal(1);
+            }
+            while(rs.next()){
+                if(min.compareTo(rs.getBigDecimal(1)) > 0){
+                    min = rs.getBigDecimal(1);
+                }
+            }
+            return min;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public BigDecimal maxPrice() {
+        String query = "SELECT price FROM exhibition";
+        BigDecimal max = new BigDecimal(0);
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(CONNECTION_URL,USER,PASSWORD);
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            if(rs.next()){
+                max = rs.getBigDecimal(1);
+            }
+            while(rs.next()){
+                if(max.compareTo(rs.getBigDecimal(1)) < 0){
+                    max = rs.getBigDecimal(1);
+                }
+            }
+            return max;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void main(String[] args) {
         ExhibitionsDAOImpl exhibitionsDAO = ExhibitionsDAOImpl.getInstance();
-        System.out.println(exhibitionsDAO.getExhibitionById(5));
+        System.out.println();
+        System.out.println(new Date(5900,0,0));
     }
 }
