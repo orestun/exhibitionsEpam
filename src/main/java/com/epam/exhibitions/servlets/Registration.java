@@ -1,10 +1,12 @@
 package com.epam.exhibitions.servlets;
 
+import com.epam.exhibitions.servlets.db.ExhibitonHallsDAOImpl;
 import com.epam.exhibitions.servlets.db.UserDAOImpl;
 import com.epam.exhibitions.servlets.db.entity.User;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -14,6 +16,9 @@ public class Registration extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+
         HttpSession session = request.getSession();
         session.setAttribute("emailRepeat"," ");
         session.setAttribute("phoneRepeat", " ");

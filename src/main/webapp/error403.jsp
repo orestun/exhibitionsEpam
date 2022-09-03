@@ -65,9 +65,9 @@
         <div class="col-md-2 col-lg-4 col-xl-4"></div>
         <div class="col-12 col-md-8 col-lg-4 col-xl-4">
             <div class="row">
-                <div class="col-12"><img class="img404" src="asserts/img/404.png" width="70%"></div>
-                <div class="col-12"><h1 style="font-family: 'Kelly Slab', cursive;text-align: center; font-size: 60px">404</h1></div>
-                <div class="col-12"><h1 style="text-align: center;font-family: 'Kelly Slab', cursive;margin-bottom: 50px">Can't find the page</h1></div>
+                <div class="col-12"><img class="img404" src="asserts/img/403.png" width="70%"></div>
+                <div class="col-12"><h1 style="font-family: 'Kelly Slab', cursive;text-align: center; font-size: 60px">403</h1></div>
+                <div class="col-12"><h1 style="text-align: center;font-family: 'Kelly Slab', cursive;margin-bottom: 50px">Access denied</h1></div>
             </div>
         </div>
         <div class="col-md-2 col-lg-4 col-xl-4"></div>

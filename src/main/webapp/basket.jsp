@@ -168,7 +168,7 @@
 <script src="asserts/js/bootstrap.js"></script>
 <script>
     function postToUrl(path, params, method) {
-        method = method || "post"; // Устанавливаем метод отправки.
+        method = method || "post";
 
         var form = document.createElement("form");
         form.setAttribute("method", method);

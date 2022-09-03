@@ -3,6 +3,7 @@
 <%@ page import="com.epam.exhibitions.servlets.db.ExhibitionsDAOImpl" %>
 <%@ page import="com.epam.exhibitions.servlets.db.DAO.ExhibitonHallsDAO" %>
 <%@ page import="com.epam.exhibitions.servlets.db.ExhibitonHallsDAOImpl" %>
+<%@ page import="com.epam.exhibitions.servlets.db.TicketsDAOImpl" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -77,14 +78,14 @@
                         </div>
                         <div class="col-7">
                             <div class="row">
-                                <div class="col-2">
-                                    <a href="#" class="sortingLinks"><p>Звичайне</p></a>
+                                <div class="col-4">
+                                    <a href="SortingByPrice?sorting=common" class="sortingLinks"><p>Всі виставки</p></a>
                                 </div>
-                                <div class="col-5">
-                                    <a href="#" class="sortingLinks"><p>Ціна:за спаданням</p></a>
+                                <div class="col-4">
+                                    <a href="SortingByPrice?sorting=FromHighToLow" class="sortingLinks"><p>Ціна:за спаданням</p></a>
                                 </div>
-                                <div class="col-5">
-                                    <a href="#" class="sortingLinks"><p>Ціна:за зростанням</p></a>
+                                <div class="col-4">
+                                    <a href="SortingByPrice?sorting=FromLowToHigh" class="sortingLinks"><p>Ціна:за зростанням</p></a>
                                 </div>
                             </div>
                         </div>
@@ -127,9 +128,19 @@
                 </form>
             </div>
             <div class="row">
+                <%if(session.getAttribute("sortingReturn")!=null){
+                    session.setAttribute("sorting","true");
+                }%>
                 <% if(session.getAttribute("sorting")==null){
-                    List<Exhibitions> exhibitionsList = exhibitionsDAO.exhibitionsCommonList();
+                    List<Exhibitions> exhibitionsList;
+                    if(session.getAttribute("sortingListCommon")!=null){
+                        exhibitionsList = (List<Exhibitions>) session.getAttribute("sortingListCommon");
+                    }else{
+                        exhibitionsList = exhibitionsDAO.exhibitionsCommonList();
+                    }
+                    TicketsDAOImpl ticketsDAO = TicketsDAOImpl.getInstance();
                     ExhibitonHallsDAO exhibitonHallsDAO = ExhibitonHallsDAOImpl.getInstance();
+                    session.setAttribute("sortingListCommon",exhibitionsList);
                     for(Exhibitions exhibition:exhibitionsList){ %>
                         <div class="col-6" style="padding: 0 0;" >
                             <div class="row exhibitionCard" style="margin: 10px;box-shadow: 9px 9px 22px -4px rgba(0,0,0,0.62);">
@@ -159,9 +170,19 @@
                                         <div class="col-12">
                                             <p>Ціна: <%=exhibition.getPrice() %></p>
                                         </div>
-                                        <% if(request.getSession().getAttribute("role")!=null){%>
+                                        <%  if(request.getSession().getAttribute("role")!=null&&request.getSession().getAttribute("role").equals("USER")){%>
                                         <div class="col-12 buttonForCard" >
                                             <a href="toAddInBasket?id=<%=exhibition.getId_exhibition()%>"><img src="asserts/img/basket.png" width="20px"></a>
+                                        </div>
+                                        <%}if(request.getSession().getAttribute("role")!=null&&request.getSession().getAttribute("role").equals("ADMINISTRATOR")){%>
+                                        <div class="col-12" style="color: #bd2130">
+                                            <p>К-ть куплених: <%=ticketsDAO.numberOfVisitors(exhibition.getId_exhibition())%></p>
+                                        </div>
+                                        <div class="col-6 buttonForCardUpdate" style="border: #575757 2px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;background: #f1cb58;width: 40%;margin-left: auto;margin-right: auto" >
+                                            <a href="toAddInBasket?id=<%=exhibition.getId_exhibition()%>"><img src="asserts/img/update.png" width="20px"></a>
+                                        </div>
+                                        <div class="col-6 buttonForCardDelete" style="border: #575757 2px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;background: #de3c3c; width: 40%;margin-left: auto;margin-right: auto">
+                                            <a href="#" onclick="postToUrl('DeleteExhibition', {'id':'<%=exhibition.getId_exhibition()%>'}, 'POST');"><img src="asserts/img/delete.png" width="20px"></a>
                                         </div>
                                         <%}%>
                                     </div>
@@ -170,8 +191,8 @@
                         </div>
                 <%  }
                 } else if(session.getAttribute("sorting")=="true"){
-                    session.removeAttribute("sorting");
                     List<Exhibitions> exhibitionsList = (List<Exhibitions>) request.getSession().getAttribute("sortingList");
+                    TicketsDAOImpl ticketsDAO = TicketsDAOImpl.getInstance();
                     ExhibitonHallsDAO exhibitonHallsDAO = ExhibitonHallsDAOImpl.getInstance();
                     for(Exhibitions exhibition1:exhibitionsList){%>
                         <div class="col-6" style="padding: 0 0;" >
@@ -202,9 +223,19 @@
                                         <div class="col-12">
                                             <p>Ціна: <%=exhibition1.getPrice() %></p>
                                         </div>
-                                        <% if(request.getSession().getAttribute("role")!=null){%>
+                                        <%  if(request.getSession().getAttribute("role")!=null&&request.getSession().getAttribute("role").equals("USER")){%>
                                         <div class="col-12 buttonForCard" >
                                             <a href="toAddInBasket?id=<%=exhibition1.getId_exhibition()%>"><img src="asserts/img/basket.png" width="20px"></a>
+                                        </div>
+                                        <%}if(request.getSession().getAttribute("role")!=null&&request.getSession().getAttribute("role").equals("ADMINISTRATOR")){%>
+                                        <div class="col-12" style="color: #bd2130">
+                                            <p>К-ть куплених: <%=ticketsDAO.numberOfVisitors(exhibition1.getId_exhibition())%></p>
+                                        </div>
+                                        <div class="col-6 buttonForCardUpdate" style="border: #575757 2px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;background: #ecc866;width: 40%;margin-left: auto;margin-right: auto" >
+                                            <a href="toAddInBasket?id=<%=exhibition1.getId_exhibition()%>"><img src="asserts/img/update.png" width="20px"></a>
+                                        </div>
+                                        <div class="col-6 buttonForCardDelete" style="border: #575757 2px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;background: #de3c3c; width: 40%;margin-left: auto;margin-right: auto">
+                                            <a href="#" onclick="postToUrl('DeleteExhibition', {'id':'<%=exhibition1.getId_exhibition()%>'}, 'POST');"><img src="asserts/img/delete.png" width="20px"></a>
                                         </div>
                                         <%}%>
                                     </div>
@@ -217,11 +248,33 @@
                 }%>
             </div>
         </div>
-        <div class="col-md-2 col-lg-2 col-xl-2" style="background: #A6A69F"></div>
+        <div class="col-md-2 col-lg-2 col-xl-2" style="background: #A6A69F">
+
+        </div>
     </div>
 </div>
 <script src="asserts/js/dropdown.js"></script>
 <script src="asserts/js/bootstrap.js"></script>
+<script>
+    function postToUrl(path, params, method) {
+        method = method || "post";
+
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+        for(var key in params) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
 </body>
 </html>
 

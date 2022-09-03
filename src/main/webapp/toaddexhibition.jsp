@@ -93,10 +93,10 @@
                         </div>
                         <div class="row" style="margin-bottom: 20px">
                             <div class="col-6" style="border-right: 1px #4F594F solid">
-                                <input type="text" class="inputName" name="nameUA" placeholder="українською" maxlength="200" oninput="namesError()" required>
+                                <input type="text" class="inputName" name="nameUA" placeholder="українською" maxlength="75" oninput="namesError()" required>
                             </div>
                             <div class="col-6" style="border-left: 1px #4F594F solid">
-                                <input type="text" class="inputName" name="nameEN" placeholder="англійською" maxlength="200" oninput="namesError()" required>
+                                <input type="text" class="inputName" name="nameEN" placeholder="англійською" maxlength="75" oninput="namesError()" required>
                             </div>
                             <% String nameRepeat = (String)request.getSession().getAttribute("namesError"); %>
                             <% if (nameRepeat==null){request.getSession().setAttribute("namesError", " ");}%>

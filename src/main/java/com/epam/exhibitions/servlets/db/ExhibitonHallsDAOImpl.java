@@ -3,12 +3,14 @@ package com.epam.exhibitions.servlets.db;
 import com.epam.exhibitions.servlets.db.DAO.ExhibitonHallsDAO;
 import com.epam.exhibitions.servlets.db.entity.ExhibitionHalls;
 import com.epam.exhibitions.servlets.db.entity.Exhibitions;
+import org.apache.log4j.Logger;
+
 
 import java.sql.*;
 import java.util.ResourceBundle;
-
 public class ExhibitonHallsDAOImpl implements ExhibitonHallsDAO {
 
+    final static Logger logger = Logger.getLogger(ExhibitonHallsDAOImpl.class);
     private static ExhibitonHallsDAOImpl instance;
 
     public static ExhibitonHallsDAOImpl getInstance() {
@@ -56,13 +58,25 @@ public class ExhibitonHallsDAOImpl implements ExhibitonHallsDAO {
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public boolean deleteHalls(ExhibitionHalls exhibitionHalls) {
-        return false;
+    public boolean deleteHalls(int id) {
+        String query = "DELETE FROM exhibition_halls WHERE id_exhibition=?";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(CONNECTION_URL,USER,PASSWORD);
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -94,6 +108,7 @@ public class ExhibitonHallsDAOImpl implements ExhibitonHallsDAO {
                 return halls+=";";
             }
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
         return null;

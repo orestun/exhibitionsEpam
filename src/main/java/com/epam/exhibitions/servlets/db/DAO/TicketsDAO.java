@@ -9,4 +9,6 @@ public interface TicketsDAO {
     boolean toAddTicket(Ticket ticket);
 
     List<Ticket> toGetTicketsForUser(String username);
+    boolean deleteTickets(int id);
+    int numberOfVisitors(int id);
 }

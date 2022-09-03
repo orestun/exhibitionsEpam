@@ -2,6 +2,7 @@ package com.epam.exhibitions.servlets.db;
 
 import com.epam.exhibitions.servlets.db.DAO.TicketsDAO;
 import com.epam.exhibitions.servlets.db.entity.Ticket;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.ResourceBundle;
 
 public class TicketsDAOImpl implements TicketsDAO {
 
+    final static Logger logger = Logger.getLogger(TicketsDAOImpl.class);
     private static TicketsDAOImpl instance;
 
     public static TicketsDAOImpl getInstance() {
@@ -35,8 +37,10 @@ public class TicketsDAOImpl implements TicketsDAO {
             preparedStatement.setString(1,ticket.getUsername());
             preparedStatement.setInt(2,ticket.getIdExhibition());
             preparedStatement.executeUpdate();
+            logger.info("User: "+ticket.getUsername()+" bought a new ticket");
             return true;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -57,16 +61,50 @@ public class TicketsDAOImpl implements TicketsDAO {
             }
             return ticketList;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean deleteTickets(int id) {
+        String query = "DELETE FROM tickets WHERE id_exhibition=?";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(CONNECTION_URL,USER,PASSWORD);
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int numberOfVisitors(int id) {
+        String query = "SELECT * FROM tickets WHERE id_exhibition=?";
+        try{
+            int number= 0;
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(CONNECTION_URL,USER,PASSWORD);
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1,id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                number++;
+            }
+            return number;
+        } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
 
     public static void main(String[] args) {
         TicketsDAOImpl ticketsDAO = TicketsDAOImpl.getInstance();
-        ticketsDAO.toGetTicketsForUser("orestun");
         ExhibitionsDAOImpl exhibitionsDAO = ExhibitionsDAOImpl.getInstance();
-        for (Ticket ticket:ticketsDAO.toGetTicketsForUser("orestun")) {
-            System.out.println(ticket.getIdTicket());
-        }
+        ticketsDAO.deleteTickets(23);
     }
 }

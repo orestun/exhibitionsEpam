@@ -1,13 +1,11 @@
 package com.epam.exhibitions.servlets.db.entity;
 
-import com.epam.exhibitions.servlets.enums.Halls;
-
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.sql.Date;
 import java.util.List;
 
-public class Exhibitions {
+public class Exhibitions implements Comparable<Exhibitions>{
 
     private int id_exhibition;
     private String nameUA;
@@ -107,5 +105,11 @@ public class Exhibitions {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+
+    @Override
+    public int compareTo(Exhibitions exhibition) {
+        return exhibition.getPrice().compareTo(this.getPrice());
     }
 }

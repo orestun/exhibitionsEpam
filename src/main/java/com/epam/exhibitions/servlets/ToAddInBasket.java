@@ -34,7 +34,10 @@ public class ToAddInBasket extends HttpServlet {
                 usersBasket.add(new ExhibitionsBasket(exhibitionsDAO.getExhibitionById(Integer.parseInt(id)),1));
                 request.getSession().setAttribute("listUsersBasket",usersBasket);
             }
-
+        }
+        if(request.getSession().getAttribute("sorting")!=null){
+            request.getSession().setAttribute("sortingReturn","true");
+            request.getSession().removeAttribute("sorting");
         }
         response.sendRedirect("exhibitions.jsp");
     }

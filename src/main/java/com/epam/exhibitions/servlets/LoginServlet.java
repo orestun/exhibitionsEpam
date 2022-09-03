@@ -6,6 +6,7 @@ import com.mysql.cj.Session;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -13,6 +14,7 @@ import java.util.Objects;
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
+    final static Logger logger = Logger.getLogger(LoginServlet.class);
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -48,6 +50,7 @@ public class LoginServlet extends HttpServlet {
             String role = userDAO1.getRole(username);
             session.setAttribute("role",role);
             System.out.println(session.getId());
+            logger.info("user: "+username+" successfully logged in!");
             response.sendRedirect("index.jsp");
         }
 

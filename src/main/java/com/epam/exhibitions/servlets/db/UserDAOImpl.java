@@ -4,11 +4,15 @@ import com.epam.exhibitions.servlets.db.DAO.UserDAO;
 import com.epam.exhibitions.servlets.db.entity.User;
 import com.epam.exhibitions.servlets.enums.UserRoles;
 import com.mysql.jdbc.Driver;
+import org.apache.log4j.Logger;
+
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ResourceBundle;
 
 public class UserDAOImpl implements UserDAO {
+
+    final static Logger logger = Logger.getLogger(UserDAOImpl.class);
     private static UserDAOImpl instance;
     public static UserDAOImpl getInstance() {
         if(instance==null){
@@ -31,6 +35,7 @@ public class UserDAOImpl implements UserDAO {
             con = DriverManager.getConnection(CONNECTION_URL,USER,PASSWORD);
             System.out.println("well done");
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -56,11 +61,10 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(7, user.getPassword());
             preparedStatement.setBigDecimal(8, user.getWallet());
             preparedStatement.executeUpdate();
+            logger.info("User: "+ user.getUsername()+" is successfully added in database");
             return true;
-        } catch (SQLException e) {
-            System.out.println(false);
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -81,6 +85,7 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = preparedStatement.executeQuery();
             return rs.next();
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -101,6 +106,7 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = preparedStatement.executeQuery();
             return rs.next();
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -121,6 +127,7 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = preparedStatement.executeQuery();
             return rs.next();
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -139,13 +146,16 @@ public class UserDAOImpl implements UserDAO {
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1,username);
             preparedStatement.executeUpdate();
+            logger.info("User: "+ username+" is successfully deleted from the database");
             return true;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         } finally {
             try{
                 con.close();
             } catch (SQLException e) {
+                logger.error(e);
                 throw new RuntimeException(e);
             }
         }
@@ -172,11 +182,13 @@ public class UserDAOImpl implements UserDAO {
             }
             return new BigDecimal(-1);
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         } finally {
             try{
                 con.close();
             } catch (SQLException e) {
+                logger.error(e);
                 throw new RuntimeException(e);
             }
         }
@@ -198,13 +210,16 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setBigDecimal(1,updatedBalance);
             preparedStatement.setString(2,username);
             preparedStatement.executeUpdate();
+            logger.info("User: "+username+" successfully added +"+cash.toString()+" $ to his balance");
             return true;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         } finally {
             try{
                 con.close();
             } catch (SQLException e) {
+                logger.error(e);
                 throw new RuntimeException(e);
             }
         }
@@ -230,13 +245,16 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setBigDecimal(1,updatedBalance);
             preparedStatement.setString(2,username);
             preparedStatement.executeUpdate();
+            logger.info("User: "+username+" successfully withdraw -"+cash.toString()+" $ from his balance");
             return true;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         } finally {
             try{
                 con.close();
             } catch (SQLException e) {
+                logger.error(e);
                 throw new RuntimeException(e);
             }
         }
@@ -261,6 +279,7 @@ public class UserDAOImpl implements UserDAO {
             }
             return password;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -282,6 +301,7 @@ public class UserDAOImpl implements UserDAO {
             }
             return null;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -300,11 +320,13 @@ public class UserDAOImpl implements UserDAO {
                 return role;
             }
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         } finally {
             try{
                 con.close();
             } catch (SQLException e) {
+                logger.error(e);
                 throw new RuntimeException(e);
             }
         }

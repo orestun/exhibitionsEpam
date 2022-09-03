@@ -2,6 +2,7 @@ package com.epam.exhibitions.servlets.db;
 
 import com.epam.exhibitions.servlets.db.DAO.ExhibitionsDAO;
 import com.epam.exhibitions.servlets.db.entity.Exhibitions;
+import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -11,6 +12,8 @@ import java.util.ResourceBundle;
 
 public class ExhibitionsDAOImpl implements ExhibitionsDAO {
     private static ExhibitionsDAOImpl instance;
+
+    final static Logger logger = Logger.getLogger(ExhibitionsDAOImpl.class);
 
     public static ExhibitionsDAOImpl getInstance() {
         if(instance==null){
@@ -43,13 +46,16 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
             preparedStatement.setTime(8,exhibitions.getWorking_time_to());
             preparedStatement.setBigDecimal(9,exhibitions.getPrice());
             preparedStatement.executeUpdate();
+            logger.info("exhibition with id: "+exhibitions.getId_exhibition()+" is successfully add in database");
             return true;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }finally {
             try{
                 con.close();
             } catch (SQLException e) {
+                logger.error(e);
                 throw new RuntimeException(e);
             }
         }
@@ -57,7 +63,19 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
 
     @Override
     public boolean deleteExhibition(int id_exhibition) {
-        return false;
+        String query = "DELETE FROM exhibition WHERE id_exhibition=?";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(CONNECTION_URL,USER,PASSWORD);
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1,id_exhibition);
+            preparedStatement.executeUpdate();
+            logger.info("exhibition with id: "+id_exhibition+" is successfully deleted from the database");
+            return true;
+        } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -74,6 +92,7 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
                 return rs.getInt(1);
             }
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
         return 0;
@@ -99,6 +118,7 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
             try{
                 con.close();
             } catch (SQLException e) {
+                logger.error(e);
                 throw new RuntimeException(e);
             }
         }
@@ -116,6 +136,7 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -135,9 +156,11 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
                 exhibitions1.setImage(rs.getString(11));
                 exhibitions.add(exhibitions1);
             }
+            logger.info("List with all exhibitions is returned!");
             return exhibitions;
         } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            logger.error(e);
+            return null;
         }
     }
 
@@ -164,8 +187,10 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
                 exhibitions.setImage(rs.getString(11));
                 exhibitionsList.add(exhibitions);
             }
+            logger.info("Sorted list with exhibitions is returned");
             return exhibitionsList;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -185,6 +210,7 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
                 return exhibitions;
             }
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
         return null;
@@ -209,6 +235,7 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
             }
             return min;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -232,13 +259,13 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
             }
             return max;
         } catch (SQLException | ClassNotFoundException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
 
     public static void main(String[] args) {
-        ExhibitionsDAOImpl exhibitionsDAO = ExhibitionsDAOImpl.getInstance();
-        System.out.println();
-        System.out.println(new Date(5900,0,0));
+        logger.info("hi(");
     }
+
 }

@@ -23,7 +23,7 @@ select.sorting{
     padding: 10px;
     margin: 10px;
     border: #4f594f 2px solid;
-    background: #F2EAE4;
+    background: white;
     height: 200px;
 }
 .cardImage{
@@ -61,15 +61,23 @@ input.dataSort{
     border-radius: 5px;
     font-family: 'Comfortaa', cursive;
     text-align: center;
-    background: #F2EAE4;
-    text-decoration: none;
 }
 a.sortingLinks{
     text-align: center;
-    color: #ff0500
+    color: #ff0500;
+    text-decoration: none;
+    font-family: 'Comfortaa', cursive;
+    font-size: 13px;
 }
 
 a.sortingLinks:hover{
     text-align: center;
     color: #ff0500
+}
+.col-6.buttonForCardDelete,
+.col-6.buttonForCardUpdate{
+    border: #4F594F 2px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;
+    background: #F2EAE4;
+    margin-right: 5px;
+    margin-left: 5px;
 }

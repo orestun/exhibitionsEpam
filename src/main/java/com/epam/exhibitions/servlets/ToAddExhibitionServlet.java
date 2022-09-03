@@ -53,40 +53,32 @@ public class ToAddExhibitionServlet extends HttpServlet {
 
         if(exhibitionsDAO.dublicateNames(nameUA,nameEN)){
             session.setAttribute("namesError","There is such name or names!");
-            RequestDispatcher dd = request.getRequestDispatcher("toaddexhibition.jsp");
-            dd.forward(request, response);
         } else if(dateFrom.isBefore(dateNow)){
             session.setAttribute("dateFromError","Date can`t be before the current date!");
-            RequestDispatcher dd = request.getRequestDispatcher("toaddexhibition.jsp");
-            dd.forward(request, response);
         } else if (date_from.after(date_to)) {
             session.setAttribute("dateToError","Date can`t be before start date!");
-            RequestDispatcher dd = request.getRequestDispatcher("toaddexhibition.jsp");
-            dd.forward(request, response);
         }else if(working_time_from.getTime()>working_time_to.getTime()){
             session.setAttribute("TimeToError","Time of start can`t be after finish date!");
-            RequestDispatcher dd = request.getRequestDispatcher("toaddexhibition.jsp");
-            dd.forward(request, response);
         }else if(!hall1&&!hall2&&!hall3&&!hall4&&!hall5){
             session.setAttribute("HallError","You have to chose at least one hall!");
-            RequestDispatcher dd = request.getRequestDispatcher("toaddexhibition.jsp");
-            dd.forward(request, response);
+        }else {
+            Exhibitions exhibitions = new Exhibitions(nameUA,nameEN,themeUA,themeEN,date_from,date_to,working_time_from,working_time_to,price);
+            exhibitionsDAO.addExhibition(exhibitions);
+            int idExhibition = exhibitionsDAO.getIdByNames(nameUA,nameEN);
+            ExhibitionHalls exhibitionHalls = new ExhibitionHalls(idExhibition,hall1,hall2,hall3,hall4,hall5);
+
+
+            exhibitonHallsDAO.addHalls(exhibitionHalls);
+
+            Part file = request.getPart("file");
+            String fileName = "exhibition_"+String.valueOf(idExhibition)+"."+file.getContentType().split("/")[1];
+            file.write("C:\\Users\\orest\\OneDrive\\Рабочий стол\\projects\\exhibitions\\src\\main\\webapp\\images\\"+fileName);
+
+            exhibitionsDAO.addImage(fileName,idExhibition);
         }
 
 
-        Exhibitions exhibitions = new Exhibitions(nameUA,nameEN,themeUA,themeEN,date_from,date_to,working_time_from,working_time_to,price);
-        exhibitionsDAO.addExhibition(exhibitions);
-        int idExhibition = exhibitionsDAO.getIdByNames(nameUA,nameEN);
-        ExhibitionHalls exhibitionHalls = new ExhibitionHalls(idExhibition,hall1,hall2,hall3,hall4,hall5);
 
-
-        exhibitonHallsDAO.addHalls(exhibitionHalls);
-
-        Part file = request.getPart("file");
-        String fileName = "exhibition_"+String.valueOf(idExhibition)+"."+file.getContentType().split("/")[1];
-        file.write("C:\\Users\\orest\\OneDrive\\Рабочий стол\\projects\\exhibitions\\src\\main\\webapp\\images\\"+fileName);
-
-        exhibitionsDAO.addImage(fileName,idExhibition);
-        response.sendRedirect("exhibitions.jsp");
+        response.sendRedirect("toaddexhibition.jsp");
     }
 }
