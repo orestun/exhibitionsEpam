@@ -1,4 +1,4 @@
-package com.epam.exhibitions.servlets.db.entity;
+package com.epam.exhibitions.db.entity;
 
 import java.math.BigDecimal;
 import java.sql.Time;

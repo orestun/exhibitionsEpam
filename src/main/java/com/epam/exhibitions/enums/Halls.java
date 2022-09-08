@@ -1,4 +1,4 @@
-package com.epam.exhibitions.servlets.enums;
+package com.epam.exhibitions.enums;
 
 public enum Halls {
     HALL1,

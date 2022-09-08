@@ -1,6 +1,6 @@
-package com.epam.exhibitions.servlets.db.DAO;
+package com.epam.exhibitions.db.DAO;
 
-import com.epam.exhibitions.servlets.db.entity.Exhibitions;
+import com.epam.exhibitions.db.entity.Exhibitions;
 
 import java.math.BigDecimal;
 import java.sql.Date;

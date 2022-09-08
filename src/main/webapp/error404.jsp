@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -9,6 +10,16 @@
     <link href="asserts/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 </head>
 <body>
+<%  String language;
+    session.setAttribute("responsePage","error404.jsp");
+    if(session.getAttribute("language")==null){
+        language = "uk";
+    }   else{
+        language = (String) session.getAttribute("language");
+    }%>
+
+<fmt:setLocale value="<%=language%>"/>
+<fmt:setBundle basename="languages"/>
 <div class="container-fluid">
     <div class="row">
         <%System.out.println(request.getSession().getAttribute("role"));%>
@@ -20,22 +31,22 @@
                     </a>
                     <p class="d-flex align-items-center head" style="font-size: 18px;font-family: 'Comfortaa', cursive;padding: 8px;display: flex;margin: 0 0;color: white">  Exhibitions</p>
                     <ul id="menu" class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <li><a href="index.jsp" class="nav-link px-2 ">Домашня</a></li>
-                        <li><a href="aboutMuseum.jsp" class="nav-link px-2 ">Про музей</a></li>
-                        <li><a href="holes.jsp" class="nav-link px-2 ">Зали</a></li>
-                        <li><a href="exhibitions.jsp" class="nav-link px-2 ">Виставки</a></li>
+                        <li><a href="index.jsp" class="nav-link px-2"><fmt:message key="header.home"/></a></li>
+                        <li><a href="aboutMuseum.jsp" class="nav-link px-2 "><fmt:message key="header.aboutMuseum"/> </a></li>
+                        <li><a href="holes.jsp" class="nav-link px-2"><fmt:message key="header.halls"/></a></li>
+                        <li><a href="exhibitions.jsp" class="nav-link px-2 "><fmt:message key="header.exhibition"/></a></li>
                         <% if("ADMINISTRATOR".equals(request.getSession().getAttribute("role"))){%>
-                        <li><a href="toaddexhibition.jsp" class="nav-link px-2 ">Добавити виставку</a></li>
+                        <li><a href="toaddexhibition.jsp" class="nav-link px-2"><fmt:message key="header.toAddExhibition"/></a></li>
                         <% }%>
                     </ul>
                     <div id="lang" class="text-end nav ">
-                        <li><a href="index.jsp" class="nav-link px-2"><img src="asserts/img/ukraineFlag.png" style="width: 24px;"></a></li>
-                        <li><a href="#" class="nav-link px-2"><img src="asserts/img/englishFlag.png" style="width: 24px;"></a></li>
+                        <li><a href="ChangeLanguage?language=uk" class="nav-link px-2"><img src="asserts/img/UkraineFlag.png" style="width: 24px;"></a></li>
+                        <li><a href="ChangeLanguage?language=en" class="nav-link px-2"><img src="asserts/img/EnglishFlag.png" style="width: 24px;"></a></li>
                     </div>
                     <% if(request.getSession().getAttribute("role")==null){%>
                     <div class="text-end">
-                        <a href="login.jsp"><button type="button" class="btn btn-outline-light me-2">Ввійти</button></a>
-                        <a href="registration.jsp"><button type="button" class="btn btn-warning">Зареєструватись</button></a>
+                        <a href="login.jsp"><button type="button" class="btn btn-outline-light me-2"><fmt:message key="header.signIn"/></button></a>
+                        <a href="registration.jsp"><button type="button" class="btn btn-warning"><fmt:message key="header.signUp"/></button></a>
                     </div>
                     <%}else{%>
                     <div class="flex-shrink-0 dropdown">

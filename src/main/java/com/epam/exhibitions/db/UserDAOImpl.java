@@ -1,9 +1,8 @@
-package com.epam.exhibitions.servlets.db;
+package com.epam.exhibitions.db;
 
-import com.epam.exhibitions.servlets.db.DAO.UserDAO;
-import com.epam.exhibitions.servlets.db.entity.User;
-import com.epam.exhibitions.servlets.enums.UserRoles;
-import com.mysql.jdbc.Driver;
+import com.epam.exhibitions.db.entity.User;
+import com.epam.exhibitions.db.DAO.UserDAO;
+import com.epam.exhibitions.enums.UserRoles;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
@@ -335,7 +334,7 @@ public class UserDAOImpl implements UserDAO {
 
     public static void main(String[] args) {
         User user = new User("Orest","Uzhytchak","o@gmail.com","+380509112262","Ukraine","orestun","12345678",new BigDecimal(100000));
-        UserDAOImpl userDAOImpl = com.epam.exhibitions.servlets.db.UserDAOImpl.getInstance();
+        UserDAOImpl userDAOImpl = UserDAOImpl.getInstance();
         //System.out.println(userDAOImpl.addNewUser(user));
         System.out.println(userDAOImpl.getRole("orestun"));
     }

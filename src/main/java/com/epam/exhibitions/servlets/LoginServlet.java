@@ -1,8 +1,7 @@
 package com.epam.exhibitions.servlets;
 
-import com.epam.exhibitions.servlets.db.UserDAOImpl;
-import com.epam.exhibitions.servlets.db.entity.User;
-import com.mysql.cj.Session;
+import com.epam.exhibitions.db.UserDAOImpl;
+import com.epam.exhibitions.db.entity.User;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;

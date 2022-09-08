@@ -1,14 +1,13 @@
 package com.epam.exhibitions.servlets;
 
-import com.epam.exhibitions.servlets.db.ExhibitionsDAOImpl;
-import com.epam.exhibitions.servlets.db.entity.Exhibitions;
+import com.epam.exhibitions.db.ExhibitionsDAOImpl;
+import com.epam.exhibitions.db.entity.Exhibitions;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

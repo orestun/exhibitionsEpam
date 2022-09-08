@@ -1,6 +1,6 @@
-package com.epam.exhibitions.servlets.db.DAO;
+package com.epam.exhibitions.db.DAO;
 
-import com.epam.exhibitions.servlets.db.entity.Ticket;
+import com.epam.exhibitions.db.entity.Ticket;
 
 import java.util.List;
 

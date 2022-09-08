@@ -1,7 +1,7 @@
-package com.epam.exhibitions.servlets.db;
+package com.epam.exhibitions.db;
 
-import com.epam.exhibitions.servlets.db.DAO.ExhibitionsDAO;
-import com.epam.exhibitions.servlets.db.entity.Exhibitions;
+import com.epam.exhibitions.db.entity.Exhibitions;
+import com.epam.exhibitions.db.DAO.ExhibitionsDAO;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;

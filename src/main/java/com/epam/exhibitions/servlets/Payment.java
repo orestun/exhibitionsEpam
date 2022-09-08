@@ -1,9 +1,9 @@
 package com.epam.exhibitions.servlets;
 
-import com.epam.exhibitions.servlets.db.TicketsDAOImpl;
-import com.epam.exhibitions.servlets.db.UserDAOImpl;
-import com.epam.exhibitions.servlets.db.entity.ExhibitionsBasket;
-import com.epam.exhibitions.servlets.db.entity.Ticket;
+import com.epam.exhibitions.db.TicketsDAOImpl;
+import com.epam.exhibitions.db.UserDAOImpl;
+import com.epam.exhibitions.db.entity.ExhibitionsBasket;
+import com.epam.exhibitions.db.entity.Ticket;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;

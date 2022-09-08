@@ -1,7 +1,7 @@
-package com.epam.exhibitions.servlets.db;
+package com.epam.exhibitions.db;
 
-import com.epam.exhibitions.servlets.db.DAO.TicketsDAO;
-import com.epam.exhibitions.servlets.db.entity.Ticket;
+import com.epam.exhibitions.db.DAO.TicketsDAO;
+import com.epam.exhibitions.db.entity.Ticket;
 import org.apache.log4j.Logger;
 
 import java.sql.*;

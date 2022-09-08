@@ -1,6 +1,6 @@
-package com.epam.exhibitions.servlets.db.entity;
+package com.epam.exhibitions.db.entity;
 
-import com.epam.exhibitions.servlets.enums.UserRoles;
+import com.epam.exhibitions.enums.UserRoles;
 
 import java.math.BigDecimal;
 
