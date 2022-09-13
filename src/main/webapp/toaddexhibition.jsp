@@ -10,7 +10,7 @@
     <link href="asserts/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 </head>
 <body>
-    <%  String language;
+    <%String language;
         session.setAttribute("responsePage","toaddexhibition.jsp");
         if(session.getAttribute("language")==null){
             language = "uk";

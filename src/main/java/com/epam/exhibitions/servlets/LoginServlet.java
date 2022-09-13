@@ -48,7 +48,6 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("wallet",user.getWallet());
             String role = userDAO1.getRole(username);
             session.setAttribute("role",role);
-            System.out.println(session.getId());
             logger.info("user: "+username+" successfully logged in!");
             response.sendRedirect("index.jsp");
         }

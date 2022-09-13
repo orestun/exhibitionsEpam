@@ -74,10 +74,12 @@ a.sortingLinks:hover{
     text-align: center;
     color: #ff0500
 }
-.col-6.buttonForCardDelete,
-.col-6.buttonForCardUpdate{
-    border: #4F594F 2px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;
+.buttonForCardDelete,
+.buttonForCardUpdate{
+    border: #4F594F 2px solid;
+    border-radius: 5px;
+    font-family: 'Kelly Slab', cursive;
+    text-align: center;
     background: #F2EAE4;
-    margin-right: 5px;
-    margin-left: 5px;
+    margin-right: 5px;margin-left: 5px;
 }

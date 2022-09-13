@@ -10,7 +10,7 @@ public interface ExhibitionsDAO {
     boolean addExhibition(Exhibitions exhibitions);
     boolean deleteExhibition(int id_exhibition);
     int getIdByNames(String nameUA, String nameEN);
-    boolean dublicateNames(String nameUA,String nameEN);
+    boolean duplicateNames(String nameUA, String nameEN);
     boolean addImage(String image,int id_exhibition);
     List<Exhibitions> exhibitionsCommonList();
     List<Exhibitions> exhibitionsSorting(String name, Date dateFrom,Date dateTo, BigDecimal priceFrom,BigDecimal priceTo);

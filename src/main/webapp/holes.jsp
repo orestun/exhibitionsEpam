@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Exhibitions</title>
-    <link rel="stylesheet" href="asserts/css/holes.css">
+    <link rel="stylesheet" href="asserts/css/holes-style.css">
     <link rel="stylesheet" href="asserts/css/header-style.css">
     <link rel="stylesheet" href="asserts/css/bootstrap.css">
     <link href="asserts/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />

@@ -1,31 +1,23 @@
 package com.epam.exhibitions.servlets;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 @WebServlet(name = "SignOutServlet", value = "/SignOutServlet")
 public class SignOutServlet extends HttpServlet {
+    final static Logger logger = Logger.getLogger(LoginServlet.class);
 
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.service(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.info("User: "+req.getSession().getAttribute("username")+" signed out!");
         req.getSession().invalidate();
-        RequestDispatcher dd = req.getRequestDispatcher("index.jsp");
-        dd.forward(req, resp);
+        resp.sendRedirect("index.jsp");
     }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
 }

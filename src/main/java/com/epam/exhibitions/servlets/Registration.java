@@ -32,7 +32,6 @@ public class Registration extends HttpServlet {
         String password = request.getParameter("password");
 
         UserDAOImpl userDAO = UserDAOImpl.getInstance();
-        userDAO.getConnection();
 
         if(userDAO.verifyEmail(email)){
             session.setAttribute("emailRepeat","There is user with such email!");

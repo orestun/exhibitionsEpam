@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/main/java/com/epam/exhibitions/db/ExhibitionsDAOImpl.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/epam/exhibitions/db/ExhibitonHallsDAOImpl.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/epam/exhibitions/db/TicketsDAOImpl.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/epam/exhibitions/db/UserDAOImpl.java" dialect="GenericSQL" />
   </component>
 </project>

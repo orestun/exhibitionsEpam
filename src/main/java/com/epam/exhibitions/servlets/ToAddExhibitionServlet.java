@@ -51,7 +51,7 @@ public class ToAddExhibitionServlet extends HttpServlet {
         ExhibitionsDAOImpl exhibitionsDAO = ExhibitionsDAOImpl.getInstance();
         ExhibitonHallsDAOImpl exhibitonHallsDAO = ExhibitonHallsDAOImpl.getInstance();
 
-        if(exhibitionsDAO.dublicateNames(nameUA,nameEN)){
+        if(exhibitionsDAO.duplicateNames(nameUA,nameEN)){
             session.setAttribute("namesError","There is such name or names!");
         } else if(dateFrom.isBefore(dateNow)){
             session.setAttribute("dateFromError","Date can`t be before the current date!");

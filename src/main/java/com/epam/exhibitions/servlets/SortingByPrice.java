@@ -24,7 +24,6 @@ public class SortingByPrice extends HttpServlet {
         }
 
         ExhibitionsDAOImpl exhibitionsDAO = ExhibitionsDAOImpl.getInstance();
-        System.out.println(sorting);
         if(exhibitionsList.isEmpty()){
             exhibitionsList = new ArrayList<>();
         }

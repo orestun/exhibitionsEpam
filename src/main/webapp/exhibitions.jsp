@@ -5,6 +5,7 @@
 <%@ page import="com.epam.exhibitions.db.ExhibitonHallsDAOImpl" %>
 <%@ page import="com.epam.exhibitions.db.TicketsDAOImpl" %>
 <%@ page import="java.util.Objects" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -12,7 +13,7 @@
 <html>
 <head>
     <title>Exhibitions</title>
-    <link rel="stylesheet" href="asserts/css/exhibitions.css">
+    <link rel="stylesheet" href="asserts/css/exhibitions-style.css">
     <link rel="stylesheet" href="asserts/css/header-style.css">
     <link rel="stylesheet" href="asserts/css/bootstrap.css">
     <link href="asserts/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -144,16 +145,21 @@
                 <%if(session.getAttribute("sortingReturn")!=null){
                     session.setAttribute("sorting","true");
                 }%>
-                <% if(session.getAttribute("sorting")==null){
-                    List<Exhibitions> exhibitionsList;
-                    if(session.getAttribute("sortingListCommon")!=null){
+                <%  TicketsDAOImpl ticketsDAO = TicketsDAOImpl.getInstance();
+                    ExhibitonHallsDAO exhibitonHallsDAO = ExhibitonHallsDAOImpl.getInstance();
+                    List<Exhibitions> exhibitionsList = new ArrayList<>();
+                    if(session.getAttribute("sorting")==null) {
+                    if (session.getAttribute("sortingListCommon") != null) {
                         exhibitionsList = (List<Exhibitions>) session.getAttribute("sortingListCommon");
-                    }else{
+                    } else {
                         exhibitionsList = exhibitionsDAO.exhibitionsCommonList();
                     }
-                    TicketsDAOImpl ticketsDAO = TicketsDAOImpl.getInstance();
-                    ExhibitonHallsDAO exhibitonHallsDAO = ExhibitonHallsDAOImpl.getInstance();
-                    session.setAttribute("sortingListCommon",exhibitionsList);
+                    session.setAttribute("sortingListCommon", exhibitionsList);
+                } else if(session.getAttribute("sorting")=="true") {
+                    exhibitionsList = (List<Exhibitions>) request.getSession().getAttribute("sortingList");
+                } else{
+                        System.out.println("hi");
+                    }
                     for(Exhibitions exhibition:exhibitionsList){ %>
                         <div class="col-6" style="padding: 0 0;" >
                             <div class="row exhibitionCard" style="margin: 10px;box-shadow: 9px 9px 22px -4px rgba(0,0,0,0.62);">
@@ -214,75 +220,7 @@
                                 </div>
                             </div>
                         </div>
-                <%  }
-                } else if(session.getAttribute("sorting")=="true"){
-                    List<Exhibitions> exhibitionsList = (List<Exhibitions>) request.getSession().getAttribute("sortingList");
-                    TicketsDAOImpl ticketsDAO = TicketsDAOImpl.getInstance();
-                    ExhibitonHallsDAO exhibitonHallsDAO = ExhibitonHallsDAOImpl.getInstance();
-                    for(Exhibitions exhibition1:exhibitionsList){%>
-                        <div class="col-6" style="padding: 0 0;" >
-                            <div class="row exhibitionCard" style="margin: 10px;box-shadow: 9px 9px 22px -4px rgba(0,0,0,0.62);">
-                                <div class="col-6" style="padding: 0 0">
-                                    <img src="images/<%= exhibition1.getImage()%>" class="cardImage" width="100%">
-                                </div>
-                                <div class="col-6">
-                                    <div class="row">
-                                        <%if(language.equals("uk")){%>
-                                        <div class="col-12">
-                                            <p><%= exhibition1.getNameUA()%></p>
-                                        </div>
-                                        <%}else{%>
-                                        <div class="col-12">
-                                            <p><%= exhibition1.getNameEN()%></p>
-                                        </div>
-                                        <%}%>
-                                        <%if(Objects.equals(language, "uk")){%>
-                                        <div class="col-12">
-                                            <p><fmt:message key="exhibitions.card.theme"/>: <%= exhibition1.getThemeUA()%></p>
-                                        </div>
-                                        <%}else{%>
-                                        <div class="col-12">
-                                            <p><fmt:message key="exhibitions.card.theme"/>: <%= exhibition1.getThemaEN()%></p>
-                                        </div>
-                                        <%}%>
-                                        <div class="col-12">
-                                            <p><%=exhibition1.getDate_from()+" - "+exhibition1.getDate_to()%></p>
-                                        </div>
-                                        <div class="col-12">
-                                            <% String time_from = exhibition1.getWorking_time_from().toString()+" ";
-                                                String time_to = exhibition1.getWorking_time_to().toString()+" ";
-                                            %>
-                                            <p><fmt:message key="exhibitions.card.workingTime"/>: <%= time_from.replace(":00 ","")+" - "+time_to.replace(":00 ","")%></p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p><fmt:message key="exhibitions.card.halls"/>: <%= exhibitonHallsDAO.getHalls(exhibition1.getId_exhibition())%></p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p><fmt:message key="exhibitions.card.Price"/>: <%=exhibition1.getPrice() %></p>
-                                        </div>
-                                        <%  if(request.getSession().getAttribute("role")!=null&&request.getSession().getAttribute("role").equals("USER")){%>
-                                        <div class="col-12 buttonForCard" >
-                                            <a href="toAddInBasket?id=<%=exhibition1.getId_exhibition()%>"><img src="asserts/img/basket.png" width="20px"></a>
-                                        </div>
-                                        <%}if(request.getSession().getAttribute("role")!=null&&request.getSession().getAttribute("role").equals("ADMINISTRATOR")){%>
-                                        <div class="col-12" style="color: #bd2130">
-                                            <p><fmt:message key="exhibitions.card.quality"/>: <%=ticketsDAO.numberOfVisitors(exhibition1.getId_exhibition())%></p>
-                                        </div>
-                                        <div class="col-6 buttonForCardUpdate" style="border: #575757 2px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;background: #ecc866;width: 40%;margin-left: auto;margin-right: auto" >
-                                            <a href="toAddInBasket?id=<%=exhibition1.getId_exhibition()%>"><img src="asserts/img/update.png" width="20px"></a>
-                                        </div>
-                                        <div class="col-6 buttonForCardDelete" style="border: #575757 2px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;background: #de3c3c; width: 40%;margin-left: auto;margin-right: auto">
-                                            <a href="#" onclick="postToUrl('DeleteExhibition', {'id':'<%=exhibition1.getId_exhibition()%>'}, 'POST');"><img src="asserts/img/delete.png" width="20px"></a>
-                                        </div>
-                                        <%}%>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                <% }
-                }else{
-                    System.out.println("hello world");
-                }%>
+                <%}%>
             </div>
         </div>
         <div class="col-md-2 col-lg-2 col-xl-2" style="background: #A6A69F">
