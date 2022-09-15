@@ -14,6 +14,7 @@ import java.util.Objects;
 public class LoginServlet extends HttpServlet {
 
     final static Logger logger = Logger.getLogger(LoginServlet.class);
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();

@@ -75,10 +75,7 @@
     <div class="row">
         <div class="col-md-1 col-lg-2 col-xl-2" style="background: #A6A69F"></div>
         <div class="col-12 col-md-10 col-lg-8 col-xl-8" style="background: #F2EAE4;height: 700px">
-            <fmt:setLocale value="uk"/>
-        <fmt:setBundle basename="languages"/>
-            <fmt:message key="header.home"/><br/>
-            <fmt:message key="header.basket"/><br/>
+
         </div>
         <div class="col-md-1 col-lg-2 col-xl-2" style="background: #A6A69F"></div>
     </div>

@@ -36,6 +36,6 @@
         <url-pattern>/basket.jsp</url-pattern>
     </filter-mapping>
     <listener>
-        <listener-class>com.epam.exhibitions.AttributeListener</listener-class>
+        <listener-class>com.epam.exhibitions.listener.AttributeListener</listener-class>
     </listener>
 </web-app>

@@ -21,8 +21,6 @@ public class Registration extends HttpServlet {
         session.setAttribute("emailRepeat"," ");
         session.setAttribute("phoneRepeat", " ");
 
-        System.out.println(session.getAttribute("role"));
-
         String name = request.getParameter("name");
         String secondName = request.getParameter("secondName");
         String email = request.getParameter("email");

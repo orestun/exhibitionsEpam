@@ -1,4 +1,4 @@
-package com.epam.exhibitions;
+package com.epam.exhibitions.listener;
 
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;

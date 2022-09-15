@@ -22,8 +22,4 @@ public class PlusTicket extends HttpServlet {
         response.sendRedirect("basket.jsp");
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 }

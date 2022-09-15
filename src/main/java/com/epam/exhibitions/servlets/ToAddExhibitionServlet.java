@@ -27,7 +27,6 @@ public class ToAddExhibitionServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         String nameUA = request.getParameter("nameUA");
-        System.out.println(nameUA);
         String nameEN = request.getParameter("nameEN");
         String themeUA = request.getParameter("themeUA");
         String themeEN = request.getParameter("themeEN");
@@ -76,9 +75,6 @@ public class ToAddExhibitionServlet extends HttpServlet {
 
             exhibitionsDAO.addImage(fileName,idExhibition);
         }
-
-
-
         response.sendRedirect("toaddexhibition.jsp");
     }
 }
