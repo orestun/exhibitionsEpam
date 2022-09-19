@@ -4,10 +4,13 @@ import com.epam.exhibitions.db.DAO.ExhibitonHallsDAO;
 import com.epam.exhibitions.db.connectionPool.BasicConnectionPool;
 import com.epam.exhibitions.db.connectionPool.ConnectionPool;
 import com.epam.exhibitions.db.entity.ExhibitionHalls;
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import org.apache.log4j.Logger;
 
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 public class ExhibitonHallsDAOImpl implements ExhibitonHallsDAO {
 
@@ -72,6 +75,51 @@ public class ExhibitonHallsDAOImpl implements ExhibitonHallsDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public boolean updateHalls(ExhibitionHalls exhibitionHalls,int id) {
+        String query = "UPDATE exhibition_halls SET HALL1=?,HALL2=?,HALL3=?,HALL4=?,HALL5=? WHERE id_exhibition=?";
+        try{
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setBoolean(1, exhibitionHalls.isHALL1());
+            preparedStatement.setBoolean(2, exhibitionHalls.isHALL2());
+            preparedStatement.setBoolean(3, exhibitionHalls.isHALL3());
+            preparedStatement.setBoolean(4, exhibitionHalls.isHALL4());
+            preparedStatement.setBoolean(5, exhibitionHalls.isHALL5());
+            preparedStatement.setInt(6, id);
+            preparedStatement.executeUpdate();
+            connectionPool.releaseConnection(connection);
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Boolean> getListHalls(int id) {
+        String query = "SELECT * FROM exhibition_halls WHERE id_exhibition=?";
+        List<Boolean> listHalls = new ArrayList<>();
+        try{
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                listHalls.add(rs.getBoolean(2));
+                listHalls.add(rs.getBoolean(3));
+                listHalls.add(rs.getBoolean(4));
+                listHalls.add(rs.getBoolean(5));
+                listHalls.add(rs.getBoolean(6));
+            }
+            connectionPool.releaseConnection(connection);
+            return listHalls;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
     @Override
     public String getHalls(int id_exhibition) {

@@ -12,7 +12,9 @@ public class ChangeLanguage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String language = request.getParameter("language");
         request.getSession().setAttribute("language",language);
-        response.sendRedirect((String) request.getSession().getAttribute("responsePage"));
+        String responsePage = (String) request.getSession().getAttribute("responsePage");
+        System.out.println(responsePage);
+        response.sendRedirect(responsePage);
     }
 
 }

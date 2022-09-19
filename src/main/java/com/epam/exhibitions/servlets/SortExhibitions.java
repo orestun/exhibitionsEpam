@@ -51,7 +51,8 @@ public class SortExhibitions extends HttpServlet {
             Date date1 = Date.valueOf(date);
             exhibitionsList = exhibitionsDAO.exhibitionsSorting(name,date1,date1,priceFromNumber,priceToNumber);
         }
-
+        request.getSession().setAttribute("total",String.valueOf(exhibitionsList.size()));
+        request.getSession().setAttribute("page","1");
         request.getSession().setAttribute("sorting","true");
         request.getSession().setAttribute("sortingList",exhibitionsList);
         response.sendRedirect("exhibitions.jsp");

@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kelly+Slab&display=swap');
 
+
 h1.head{
     margin-top: 40px;
     text-align: center;
     font-family: 'Comfortaa', cursive;
+    margin-bottom: 20px;
 }
 h5{
     text-align: center;
@@ -14,7 +16,7 @@ h5{
     display:none;
 }
 .uploadLabel {
-    border: 1px solid #ffaf00;
+    border: 2px solid #ffaf00;
     display: inline-block;
     padding: 7px 15px;
     cursor: pointer;
@@ -65,7 +67,7 @@ input.paidForm{
 }
 input{
     border-radius: 5px;
-    border: #4F594F 1px solid;
+    border: #4F594F 2px solid;
 }
 input.button{
     width: 50%;
@@ -81,6 +83,18 @@ input.button:hover{
     background-color:#A6A69F;
     color: black;
 }
+.currentImage{
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.photoUploaded{
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
 #dateError{
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -89,4 +103,22 @@ input.button:hover{
     color: #cb1111;
     font-size: 12px;
     margin: 1px 0 0;
+}
+a.buttonCansel{
+    width: 50%;
+    margin-right: 25%;
+    margin-left: 25%;
+    display: block;
+    text-align: center;
+    height: 28px;
+    font-family: 'Comfortaa', cursive;
+    background: #ff5c5c;
+    border-radius: 10px;
+    border: black 1px solid;
+    text-decoration: none;
+    color: white;
+}
+a.buttonCansel:hover{
+    background: #ff8471;
+    color: black;
 }

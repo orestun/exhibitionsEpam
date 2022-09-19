@@ -6,6 +6,9 @@
 <%@ page import="com.epam.exhibitions.db.TicketsDAOImpl" %>
 <%@ page import="java.util.Objects" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.LocalTime" %>
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -103,8 +106,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <input style="height: 33.33px;width: 100%;padding: 5px;text-align: center;font-family: 'Comfortaa', cursive;border-radius: 5px;border: #4F594F 2px solid;font-size: 16px;" type="submit" value="<fmt:message key="exhibitions.sorting.button.title"/>" name="buttonSort" class="buttonSort">
+                        <div class="col-3" style="padding: 0 0">
+                            <input style="height: 33.33px;width: 100%;padding: 5px;text-align: center;font-family: 'Comfortaa', cursive;border-radius: 5px;border: #4F594F 1px solid;font-size: 16px;" type="submit" value="<fmt:message key="exhibitions.sorting.button.title"/>" name="buttonSort" class="buttonSort">
                         </div>
                     </div>
                     <div class="row" style="margin-top: 20px">
@@ -145,9 +148,23 @@
                 <%if(session.getAttribute("sortingReturn")!=null){
                     session.setAttribute("sorting","true");
                 }%>
-                <%  TicketsDAOImpl ticketsDAO = TicketsDAOImpl.getInstance();
+
+                <%  int numberOfCards = 6;
+                    TicketsDAOImpl ticketsDAO = TicketsDAOImpl.getInstance();
                     ExhibitonHallsDAO exhibitonHallsDAO = ExhibitonHallsDAOImpl.getInstance();
                     List<Exhibitions> exhibitionsList = new ArrayList<>();
+                    String pageId= (String) session.getAttribute("page");
+                    if(pageId==null){
+                        pageId=String.valueOf(1);
+                    }
+                    String totalPages = (String) session.getAttribute("total");
+                    if(totalPages==null){
+                        List<Exhibitions> list= exhibitionsDAO.exhibitionsCommonList();
+                        totalPages=String.valueOf(Math.ceil(list.size()/ (double) numberOfCards));
+                    }else{
+                        totalPages=String.valueOf(Math.ceil(Integer.parseInt(totalPages)/(double) numberOfCards));
+                    }
+                    System.out.println(totalPages);
                     if(session.getAttribute("sorting")==null) {
                     if (session.getAttribute("sortingListCommon") != null) {
                         exhibitionsList = (List<Exhibitions>) session.getAttribute("sortingListCommon");
@@ -160,10 +177,33 @@
                 } else{
                         System.out.println("hi");
                     }
-                    for(Exhibitions exhibition:exhibitionsList){ %>
+                    List<Exhibitions> exhibitionsPage = new ArrayList<>();
+                    if(exhibitionsList.isEmpty()){%>
+                        <h2 style="text-align: center;font-family: 'Comfortaa', cursive">За вашим запитом виставок не знайдено</h2>
+                <img src="asserts/img/noExhibitions.png" style="width: 320px;margin-right: auto;margin-left: auto;margin-bottom: 30px">
+                    <%}else{
+                        int from = Integer.parseInt(pageId)*numberOfCards-numberOfCards;
+                        int to = Integer.parseInt(pageId)*numberOfCards;
+                        if(to>=exhibitionsList.size()){
+                            to=exhibitionsList.size();
+                        }
+                        exhibitionsPage = exhibitionsList.subList(from,to);
+                        LocalDate localDate = LocalDate.now();
+                        LocalTime localTime = LocalTime.now();
+                        for(Exhibitions exhibitions:exhibitionsList){
+                            if(localDate.isAfter(LocalDate.parse(exhibitions.getDate_to().toString()))||(localDate.isEqual(LocalDate.parse(exhibitions.getDate_to().toString()))&&localTime.isAfter(LocalTime.parse(exhibitions.getWorking_time_to().toString())))){
+                                exhibitionsDAO.deleteExhibition(exhibitions.getId_exhibition());
+                                exhibitonHallsDAO.deleteHalls(exhibitions.getId_exhibition());
+                                ticketsDAO.deleteTickets(exhibitions.getId_exhibition());
+                                exhibitionsList.remove(exhibitions);
+                                request.getSession().setAttribute("total",String.valueOf(exhibitionsList.size()));
+                            }
+                        }
+                    }
+                    for(Exhibitions exhibition:exhibitionsPage){ %>
                         <div class="col-6" style="padding: 0 0;" >
                             <div class="row exhibitionCard" style="margin: 10px;box-shadow: 9px 9px 22px -4px rgba(0,0,0,0.62);">
-                                <div class="col-6" style="padding: 0 0">
+                                <div class="col-6 imageBlock" style="padding: 0 0" >
                                     <img src="images/<%= exhibition.getImage()%>" class="cardImage" width="100%">
                                 </div>
                                 <div class="col-6">
@@ -209,10 +249,10 @@
                                         <div class="col-12" style="color: #bd2130">
                                             <p><fmt:message key="exhibitions.card.quality"/>: <%=ticketsDAO.numberOfVisitors(exhibition.getId_exhibition())%></p>
                                         </div>
-                                        <div class="col-6 buttonForCardUpdate" style="border: #575757 2px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;background: #f1cb58;width: 40%;margin-left: auto;margin-right: auto" >
-                                            <a href="toAddInBasket?id=<%=exhibition.getId_exhibition()%>"><img src="asserts/img/update.png" width="20px"></a>
+                                        <div class="col-6 buttonForCardUpdate" style="border: #575757 1px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;background: #f1cb58;width: 40%;margin-left: auto;margin-right: auto" >
+                                            <a href="#" onclick="postToUrl('GetIdForUpdate', {'id':'<%=exhibition.getId_exhibition()%>'}, 'POST');"><img src="asserts/img/update.png" width="20px"></a>
                                         </div>
-                                        <div class="col-6 buttonForCardDelete" style="border: #575757 2px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;background: #de3c3c; width: 40%;margin-left: auto;margin-right: auto">
+                                        <div class="col-6 buttonForCardDelete" style="border: #575757 1px solid;border-radius: 5px;font-family: 'Kelly Slab', cursive;text-align: center;background: #de3c3c; width: 40%;margin-left: auto;margin-right: auto">
                                             <a href="#" onclick="postToUrl('DeleteExhibition', {'id':'<%=exhibition.getId_exhibition()%>'}, 'POST');"><img src="asserts/img/delete.png" width="20px"></a>
                                         </div>
                                         <%}%>
@@ -220,7 +260,36 @@
                                 </div>
                             </div>
                         </div>
+                    <%}%>
+            </div>
+            <div style="text-align: center;margin-top: 20px;margin-bottom: 20px" >
+                <div class="paginationElem" style="display: inline-block;">
+                <%int pageIdNumber = Integer.parseInt(pageId);
+                  double totalPagesNumber = Double.parseDouble(totalPages);%>
+                <%if(pageIdNumber>1&&totalPagesNumber>1){%>
+                <a href="ViewExhibition?page=<%=pageIdNumber-1%>" style="padding: 0 0;height: 40px"><img src="asserts/img/previous.png" width="20"></a>
                 <%}%>
+                <%int i=0;
+                int begin = pageIdNumber-4;
+                if(begin<=0){
+                    begin=1;
+                }
+                int finish = begin+4;
+                if(finish>totalPagesNumber){
+                    finish= (int) totalPagesNumber;
+                }
+                while(i<5&&begin+i!=finish+1){
+                    if(begin+i==pageIdNumber){%>
+                        <a href="ViewExhibition?page=<%=begin+i%>" class="active"><%=begin+i%></a>
+                    <%}else{%>
+                        <a href="ViewExhibition?page=<%=begin+i%>"><%=begin+i%></a>
+                    <%}
+                    i++;
+                }%>
+                <%if(pageIdNumber<Double.parseDouble(totalPages)){%>
+                <a href="ViewExhibition?page=<%=pageIdNumber+1%>" style="padding: 0 0;height: 40px" ><img src="asserts/img/next.png" width="20"></a>
+                <%}%>
+                </div>
             </div>
         </div>
         <div class="col-md-2 col-lg-2 col-xl-2" style="background: #A6A69F">

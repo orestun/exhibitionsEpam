@@ -17,4 +17,5 @@ public interface ExhibitionsDAO {
     BigDecimal minPrice();
     BigDecimal maxPrice();
 
+    boolean updateExhibition(Exhibitions exhibitions, int id);
 }

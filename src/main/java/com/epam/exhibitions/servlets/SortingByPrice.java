@@ -31,11 +31,13 @@ public class SortingByPrice extends HttpServlet {
         switch (sorting){
             case "common":
                 exhibitionsList = exhibitionsDAO.exhibitionsCommonList();
+                request.getSession().setAttribute("total",null);
                 break;
             case "FromHighToLow":
                 Collections.sort(exhibitionsList);
                 break;
             case "FromLowToHigh":
+                Collections.sort(exhibitionsList);
                 Collections.reverse(exhibitionsList);
                 break;
         }

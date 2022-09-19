@@ -11,6 +11,7 @@
 </head>
 <body>
 <%  String language;
+    session.setAttribute("responsePage","wallet.jsp");
     if(session.getAttribute("language")==null){
         language = "uk";
     }   else{

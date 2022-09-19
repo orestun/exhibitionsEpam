@@ -18,6 +18,7 @@
 </head>
 <body>
 <%  String language;
+    session.setAttribute("responsePage","basket.jsp");
     if(session.getAttribute("language")==null){
         language = "uk";
     }   else{

@@ -260,6 +260,32 @@ public class ExhibitionsDAOImpl implements ExhibitionsDAO {
         }
     }
 
+    @Override
+    public boolean updateExhibition(Exhibitions exhibitions, int id) {
+        String query = "UPDATE exhibition SET nameUA = ?,nameEN = ?,themeUA = ?,themeEN = ?,date_from = ?,date_to = ?,working_time_from = ?,working_time_to = ?,price = ?,image = ? WHERE id_exhibition=?";
+        try{
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,exhibitions.getNameUA());
+            preparedStatement.setString(2,exhibitions.getNameEN());
+            preparedStatement.setString(3,exhibitions.getThemeUA());
+            preparedStatement.setString(4,exhibitions.getThemaEN());
+            preparedStatement.setDate(5,exhibitions.getDate_from());
+            preparedStatement.setDate(6,exhibitions.getDate_to());
+            preparedStatement.setTime(7,exhibitions.getWorking_time_from());
+            preparedStatement.setTime(8,exhibitions.getWorking_time_to());
+            preparedStatement.setBigDecimal(9,exhibitions.getPrice());
+            preparedStatement.setString(10,exhibitions.getImage());
+            preparedStatement.setInt(11,id);
+            preparedStatement.executeUpdate();
+            connectionPool.releaseConnection(connection);
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public static void main(String[] args) {
         connectionPool.getConnection();
         connectionPool.getConnection();
